@@ -9,6 +9,9 @@ const container = document.getElementById('three-container');
 const width = container.clientWidth;
 const height = container.clientHeight;
 
+
+
+
 const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 
 camera.position.set(0, 0, 20);
@@ -24,8 +27,19 @@ container.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 
+
+
+const color = 0xFFFFFF;
+const intensity = 20;
+const light = new THREE.DirectionalLight(color, intensity);
+light.position.set(-10, 10, 40);
+scene.add(light);
+
+const ambientLight = new THREE.AmbientLight(0x404040, 20); // 颜色和强度
+scene.add(ambientLight);
+
 const cubeGeometry = new THREE.BoxGeometry(4, 2, 2);
-const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 scene.add(cube);
 
