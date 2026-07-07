@@ -1,15 +1,14 @@
 
 import * as THREE from 'three';
 
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 // const loader = new GLTFLoader();
 
 const container = document.getElementById('three-container');
 const width = container.clientWidth;
 const height = container.clientHeight;
-
-
 
 
 const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
