@@ -16,7 +16,7 @@
   "keywords": [],
   "author": "hexiongwu1995, Copilot",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/hexiongwu1995/Three/issues"
   },
