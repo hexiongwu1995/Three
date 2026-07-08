@@ -7,13 +7,14 @@
   <title>My first three.js app</title>
   <style>
     body {
-      margin: 5rem 0;
+      margin: 1rem auto;
+      width: 90vw;
+      max-width: 1000px;
+      font-family: "Cambria Math", Arial, "KAiTi", sans-serif;
     }
 
     .container {
-      margin: 0 auto;
-      width: 70vw;
-      max-width: 1000px;
+      width: 100%;
       box-sizing: border-box;
       border: 1px solid gray;
       border-radius: 12px;
@@ -24,44 +25,29 @@
     }
 
     table#screen-info-table {
-      width: 70vw;
-      max-width: 1100px;
-      margin: 20px auto;
+      margin: 2rem auto;
       border-collapse: collapse;
-      font-family: sans-serif;
+      font-size: 0.8rem;
     }
 
     table#screen-info-table th,
     table#screen-info-table td {
       border: 1px solid #ccc;
-      padding: 10px 12px;
+      padding: 10px 5px;
       text-align: left;
       vertical-align: middle;
     }
 
     table#screen-info-table th {
       background: #f5f5f5;
-      width: 25%;
     }
 
-    table#screen-info-table td {
-      width: 25%;
-    }
-
-    .param-label {
-      line-height: 1.4;
-    }
-
-    .param-label small {
+    small {
       display: block;
       margin-top: 4px;
       color: #666;
-      font-size: 0.85em;
+      font-size: 0.85rem;
       line-height: 1.25;
-    }
-
-    table#screen-info-table tbody tr:nth-child(even) {
-      background: #fafafa;
     }
 
     table#screen-info-table caption {
@@ -75,7 +61,7 @@
 
 <body>
 
-  <p id="title_p" style="font-size: 4rem; text-align: center;"></p>
+  <p id="title_p" style="font-size: 2rem; text-align: center;"></p>
   <script>
     // const title = document.getElementsByTagName("title")[0]
     const title = document.querySelector("title")
@@ -102,49 +88,57 @@
         <th>值</th>
       </tr>
       <tr>
-        <td><div class="param-label">devicePixelRatio<small>CSS 像素与物理像素的缩放比例</small></div></td>
+        <td>devicePixelRatio<small>CSS 像素与物理像素的缩放比例</small></td>
         <td id="info-devicePixelRatio"></td>
-        <td><div class="param-label">devicePixelRatio<small>重复显示，保持表格对称</small></div></td>
+        <td>devicePixelRatio<small>重复显示，保持表格对称</small></td>
         <td id="info-devicePixelRatio-dup"></td>
       </tr>
       <tr>
-        <td><div class="param-label">screen.width<small>屏幕总宽度（CSS 像素）</small></div></td>
+        <td>screen.width<small>屏幕总宽度（CSS 像素）</small></td>
         <td id="info-screen-width"></td>
-        <td><div class="param-label">screen.height<small>屏幕总高度（CSS 像素）</small></div></td>
+        <td>screen.height<small>屏幕总高度（CSS 像素）</small></td>
         <td id="info-screen-height"></td>
       </tr>
       <tr>
-        <td><div class="param-label">screen.availWidth<small>可用屏幕宽度，排除任务栏等</small></div></td>
+        <td>screen.availWidth<small>可用屏幕宽度，排除任务栏等</small></td>
         <td id="info-screen-availWidth"></td>
-        <td><div class="param-label">screen.availHeight<small>可用屏幕高度，排除任务栏等</small></div></td>
+        <td>screen.availHeight<small>可用屏幕高度，排除任务栏等</small></td>
         <td id="info-screen-availHeight"></td>
       </tr>
       <tr>
-        <td><div class="param-label">physicalScreen.width<small>屏幕物理像素宽度</small></div></td>
+        <td>physicalScreen.width<small>屏幕物理像素宽度</small></td>
         <td id="info-physicalScreen-width"></td>
-        <td><div class="param-label">physicalScreen.height<small>屏幕物理像素高度</small></div></td>
+        <td>physicalScreen.height<small>屏幕物理像素高度</small></td>
         <td id="info-physicalScreen-height"></td>
       </tr>
       <tr>
-        <td><div class="param-label">viewport.width<small>当前窗口可见区域宽度（CSS 像素）</small></div></td>
+        <td>viewport.width<small>当前窗口可见区域宽度（CSS 像素）</small></td>
         <td id="info-viewport-width"></td>
-        <td><div class="param-label">viewport.height<small>当前窗口可见区域高度（CSS 像素）</small></div></td>
+        <td>viewport.height<small>当前窗口可见区域高度（CSS 像素）</small></td>
         <td id="info-viewport-height"></td>
       </tr>
       <tr>
-        <td><div class="param-label">physicalViewport.width<small>视口物理像素宽度</small></div></td>
+        <td>physicalViewport.width<small>视口物理像素宽度</small></td>
         <td id="info-physicalViewport-width"></td>
-        <td><div class="param-label">physicalViewport.height<small>视口物理像素高度</small></div></td>
+        <td>physicalViewport.height<small>视口物理像素高度</small></td>
         <td id="info-physicalViewport-height"></td>
       </tr>
       <tr>
-        <td><div class="param-label">screen.colorDepth<small>每个像素的颜色位数</small></div></td>
+        <td>screen.colorDepth<small>每个像素的颜色位数</small></td>
         <td id="info-colorDepth"></td>
-        <td><div class="param-label">screen.pixelDepth<small>每个像素的总位深</small></div></td>
+        <td>screen.pixelDepth<small>每个像素的总位深</small></td>
         <td id="info-pixelDepth"></td>
       </tr>
     </tbody>
   </table>
+
+
+
+
+
+
+
+
 
   <script type="module" src="./index.js"></script>
 
