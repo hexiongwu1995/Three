@@ -6,11 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My first three.js app</title>
   <style>
-    body {
+    /* body {
       margin: 1rem auto;
       width: 90vw;
-      max-width: 1000px;
+      max-width: 800px;
+      min-width: 320px;
+      width: clamp(320px, 90vw, 800px);
       font-family: "Cambria Math", Arial, "KAiTi", sans-serif;
+    } */
+
+    body {
+      margin: 1rem auto;
+      width: min(90vw, 800px);
+    }
+
+    @media (min-width: 900px) {
+      body {
+        width: min(50vw, 900px);
+      }
+    }
+
+    @media (min-width: 1400px) {
+      body {
+        width: min(50vw, 800px);
+      }
     }
 
     .container {
@@ -58,7 +77,7 @@
       font-weight: bold;
     }
   </style>
-  <script type="module" crossorigin src="/Three/assets/index-ChfVG-1l.js"></script>
+  <script type="module" crossorigin src="/Three/assets/index-DL3PYdNI.js"></script>
 </head>
 
 <body>
@@ -134,8 +153,167 @@
     </tbody>
   </table>
 
+  <section style="width: 95%; margin: 2rem auto; font-size: 0.95rem; line-height: 1.75; color: #333;">
+    <h2 style="font-size: 1.2rem; margin-bottom: 0.8rem;">为什么需要引入 CSS 像素</h2>
+
+    <p>The reference pixel is the visual angle of one pixel on a device with a device pixel density of 96dpi and a
+      distance from the reader of an arm’s length. For a nominal arm’s length of 28 inches, the visual angle is
+      therefore about 0.0213 degrees. For reading at arm’s length, 1px thus corresponds to about 0.26 mm (1/96 inch).
+    </p>
+
+    <p>The image below illustrates the effect of viewing distance on the size of a reference pixel: a reading distance
+      of 71 cm (28 inches) results in a reference pixel of 0.26 mm, while a reading distance of 3.5 m (12 feet) results
+      in a reference pixel of 1.3 mm.</p>
 
 
+    <figure>
+      <image src="/Three/assets/pixel1-SGwRDVuq.png" alt="示意图" />
+      <figcaption>
+        Showing that pixels must become larger if the viewing distance increases
+      </figcaption>
+    </figure>
+
+    <p>This second image illustrates the effect of a device’s resolution on the pixel unit: an area of 1px by 1px is
+      covered by a single dot in a low-resolution device (e.g. a typical computer display), while the same area is
+      covered by 16 dots in a higher resolution device (such as a printer).</p>
+
+
+    <figure>
+      <img src="/Three/assets/pixel2-BRhCXDkO.png" alt="示意图">
+      <figcaption>
+        Showing that more device pixels (dots) are needed to cover a 1px by 1px area on a high-resolution device than on
+        a lower-resolution one (of the same approximate viewing distance)
+      </figcaption>
+    </figure>
+
+    <p>A device pixel is the smallest unit of area on the device output capable of displaying its full range of colors.
+      For typical color screens, it’s a square or somewhat rectangular region containing a red, green, and blue
+      subpixel. Many non-traditional outputs exist that can blur this definition, such as by displaying some colors at
+      higher resolutions. Such devices still expose some equivalent notion of "device pixel", however.</p>
+
+    <p>
+      在现代 Web 开发中，页面需要适应各种屏幕尺寸、分辨率和设备像素比。CSS
+      像素就是为了解决这个问题而引入的一种抽象单位。它并不是显示器上的实际物理像素，而是浏览器为页面布局和样式计算提供的逻辑像素，帮助开发者在不同设备之间<strong>保持视觉效果一致。</strong>
+    </p>
+    <p>
+      例如，在高分辨率显示器上，一个 CSS 像素可能对应多个物理像素。设备像素比（devicePixelRatio）为 2 的屏幕上，一个 CSS 像素在物理像素层面上占据 2×2 个点。如果直接使用物理像素作为布局单位，页面在高
+      DPI 设备上会显得非常小，文字和控件不够可读。CSS 像素让浏览器自动进行缩放，使得相同的 CSS 大小在不同设备上看起来更接近，从而降低了开发复杂度。
+    </p>
+    <p>
+      另一个关键原因在于视口与设备之间的差异。移动设备通常具有更高的像素密度，但其 CSS 视口宽度仍保持一个合理的数值范围，这使得响应式布局成为可能。开发者可以使用 CSS
+      像素定义媒体查询断点、字体大小和元素尺寸，而不必为每种屏幕物理像素密度单独设计。
+    </p>
+    <p>
+      本页面展示的参数，如 <code>screen.width</code>、<code>screen.height</code>、<code>window.innerWidth</code>，通常以 CSS
+      像素为单位返回。这些值反映了当前屏幕和视口的逻辑尺寸，而不是设备的原始像素数。结合 <code>devicePixelRatio</code>，我们可以进一步计算“物理像素”尺寸，以便在图像资源、画布渲染和高 DPI
+      适配方面做出更好的决策。
+    </p>
+    <p>
+      简而言之，CSS 像素的核心价值在于它为跨设备布局提供了统一的基准。它将视觉设计与硬件像素分离，使网页能够兼顾多种屏幕和显示器，同时保持排版比例和交互大小的稳定性。正因为如此，在现代前端开发中，了解 CSS
+      像素与物理像素之间的关系，是实现兼容性和可访问性的基础。
+    </p>
+  </section>
+
+
+
+
+
+  <table id="device-size-table">
+    <caption>常见显示设备 CSS 像素尺寸</caption>
+    <tbody>
+      <tr>
+        <th>设备类型</th>
+        <th>典型型号</th>
+        <th>Width (CSS 像素)</th>
+        <th>Height (CSS 像素)</th>
+      </tr>
+      <tr>
+        <td>智能手机</td>
+        <td>iPhone 12</td>
+        <td>390</td>
+        <td>844</td>
+      </tr>
+      <tr>
+        <td>智能手机</td>
+        <td>Samsung Galaxy S21</td>
+        <td>360</td>
+        <td>800</td>
+      </tr>
+      <tr>
+        <td>平板电脑</td>
+        <td>iPad (10.2")</td>
+        <td>810</td>
+        <td>1080</td>
+      </tr>
+      <tr>
+        <td>平板电脑</td>
+        <td>iPad Pro (11")</td>
+        <td>834</td>
+        <td>1194</td>
+      </tr>
+      <tr>
+        <td>笔记本电脑</td>
+        <td>MacBook Pro 13"</td>
+        <td>1280</td>
+        <td>800</td>
+      </tr>
+      <tr>
+        <td>笔记本电脑</td>
+        <td>Dell XPS 15"</td>
+        <td>1920</td>
+        <td>1200</td>
+      </tr>
+      <tr>
+        <td>台式机显示器</td>
+        <td>24" 1080p</td>
+        <td>1920</td>
+        <td>1080</td>
+      </tr>
+      <tr>
+        <td>台式机显示器</td>
+        <td>27" 1440p</td>
+        <td>2560</td>
+        <td>1440</td>
+      </tr>
+      <tr>
+        <td>台式机显示器</td>
+        <td>4K 4000x2250</td>
+        <td>3840</td>
+        <td>2160</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  <style>
+    table#device-size-table {
+      width: 95%;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    table#device-size-table th,
+    table#device-size-table td {
+      border: 1px solid #ccc;
+      padding: 10px 5px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    table#device-size-table th {
+      background: #f5f5f5;
+    }
+
+    table#device-size-table caption {
+      caption-side: top;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  </style>
 
 
 
