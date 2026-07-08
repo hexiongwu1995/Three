@@ -25,7 +25,7 @@ container.appendChild(renderer.domElement);
 
 
 const scene = new THREE.Scene();
-
+scene.background = new THREE.Color(0xffffff);
 
 
 const color = 0xFFFFFF;
