@@ -12,10 +12,58 @@
       box-sizing: border-box;
       border: 1px solid gray;
       border-radius: 12px;
-      overflow:hidden;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    table#screen-info-table {
+      width: 70vw;
+      max-width: 1100px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-family: sans-serif;
+    }
+
+    table#screen-info-table th,
+    table#screen-info-table td {
+      border: 1px solid #ccc;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    table#screen-info-table th {
+      background: #f5f5f5;
+      width: 25%;
+    }
+
+    table#screen-info-table td {
+      width: 25%;
+    }
+
+    .param-label {
+      line-height: 1.4;
+    }
+
+    .param-label small {
+      display: block;
+      margin-top: 4px;
+      color: #666;
+      font-size: 0.85em;
+      line-height: 1.25;
+    }
+
+    table#screen-info-table tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    table#screen-info-table caption {
+      caption-side: top;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -31,6 +79,7 @@
     // console.log(title_p)
     title_p.innerHTML = title.innerHTML
     console.log(title_p.innerHTML)
+
   </script>
 
   <div class="container">
@@ -38,11 +87,115 @@
   aspect-ratio: 1 / 1;"></div>
   </div>
 
-
+  <table id="screen-info-table">
+    <caption>屏幕与视口信息（实时刷新）</caption>
+    <tbody>
+      <tr>
+        <th>参数名称</th>
+        <th>值</th>
+        <th>参数名称</th>
+        <th>值</th>
+      </tr>
+      <tr>
+        <td><div class="param-label">devicePixelRatio<small>CSS 像素与物理像素的缩放比例</small></div></td>
+        <td id="info-devicePixelRatio"></td>
+        <td><div class="param-label">devicePixelRatio<small>重复显示，保持表格对称</small></div></td>
+        <td id="info-devicePixelRatio-dup"></td>
+      </tr>
+      <tr>
+        <td><div class="param-label">screen.width<small>屏幕总宽度（CSS 像素）</small></div></td>
+        <td id="info-screen-width"></td>
+        <td><div class="param-label">screen.height<small>屏幕总高度（CSS 像素）</small></div></td>
+        <td id="info-screen-height"></td>
+      </tr>
+      <tr>
+        <td><div class="param-label">screen.availWidth<small>可用屏幕宽度，排除任务栏等</small></div></td>
+        <td id="info-screen-availWidth"></td>
+        <td><div class="param-label">screen.availHeight<small>可用屏幕高度，排除任务栏等</small></div></td>
+        <td id="info-screen-availHeight"></td>
+      </tr>
+      <tr>
+        <td><div class="param-label">physicalScreen.width<small>屏幕物理像素宽度</small></div></td>
+        <td id="info-physicalScreen-width"></td>
+        <td><div class="param-label">physicalScreen.height<small>屏幕物理像素高度</small></div></td>
+        <td id="info-physicalScreen-height"></td>
+      </tr>
+      <tr>
+        <td><div class="param-label">viewport.width<small>当前窗口可见区域宽度（CSS 像素）</small></div></td>
+        <td id="info-viewport-width"></td>
+        <td><div class="param-label">viewport.height<small>当前窗口可见区域高度（CSS 像素）</small></div></td>
+        <td id="info-viewport-height"></td>
+      </tr>
+      <tr>
+        <td><div class="param-label">physicalViewport.width<small>视口物理像素宽度</small></div></td>
+        <td id="info-physicalViewport-width"></td>
+        <td><div class="param-label">physicalViewport.height<small>视口物理像素高度</small></div></td>
+        <td id="info-physicalViewport-height"></td>
+      </tr>
+      <tr>
+        <td><div class="param-label">screen.colorDepth<small>每个像素的颜色位数</small></div></td>
+        <td id="info-colorDepth"></td>
+        <td><div class="param-label">screen.pixelDepth<small>每个像素的总位深</small></div></td>
+        <td id="info-pixelDepth"></td>
+      </tr>
+    </tbody>
+  </table>
 
   <script type="module" src="./index.js"></script>
 
+  <script>
+    function getScreenInfo() {
+      const dpr = window.devicePixelRatio;
 
+      return {
+        devicePixelRatio: dpr,
+        screen: {
+          width: screen.width,
+          height: screen.height,
+          availWidth: screen.availWidth,
+          availHeight: screen.availHeight
+        },
+        physicalScreen: {
+          width: Math.round(screen.width * dpr),
+          height: Math.round(screen.height * dpr)
+        },
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight
+        },
+        physicalViewport: {
+          width: Math.round(window.innerWidth * dpr),
+          height: Math.round(window.innerHeight * dpr)
+        },
+        colorDepth: screen.colorDepth,
+        pixelDepth: screen.pixelDepth
+      };
+    }
+
+    function updateScreenInfoTable() {
+      const info = getScreenInfo();
+
+      document.getElementById('info-devicePixelRatio').textContent = info.devicePixelRatio;
+      document.getElementById('info-screen-width').textContent = info.screen.width;
+      document.getElementById('info-screen-height').textContent = info.screen.height;
+      document.getElementById('info-screen-availWidth').textContent = info.screen.availWidth;
+      document.getElementById('info-screen-availHeight').textContent = info.screen.availHeight;
+      document.getElementById('info-physicalScreen-width').textContent = info.physicalScreen.width;
+      document.getElementById('info-physicalScreen-height').textContent = info.physicalScreen.height;
+      document.getElementById('info-viewport-width').textContent = info.viewport.width;
+      document.getElementById('info-viewport-height').textContent = info.viewport.height;
+      document.getElementById('info-physicalViewport-width').textContent = info.physicalViewport.width;
+      document.getElementById('info-physicalViewport-height').textContent = info.physicalViewport.height;
+      document.getElementById('info-colorDepth').textContent = info.colorDepth;
+      document.getElementById('info-pixelDepth').textContent = info.pixelDepth;
+      document.getElementById('info-devicePixelRatio-dup').textContent = info.devicePixelRatio;
+    }
+
+    updateScreenInfoTable();
+    window.addEventListener('resize', updateScreenInfoTable);
+    window.addEventListener('orientationchange', updateScreenInfoTable);
+    setInterval(updateScreenInfoTable, 1000);
+  </script>
 </body>
 
 </html>
