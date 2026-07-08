@@ -101,7 +101,7 @@
 
 
   <figure>
-    <figcaption style="text-align: center;">
+    <figcaption>
       屏幕与视口信息（实时刷新）
     </figcaption>
     <table id="screen-info-table">
@@ -189,6 +189,11 @@
       figure figcaption::before {
         content: "Figure " counter(figure) "：";
       }
+      figcaption {
+        width: 80%;
+        font-size: 0.7rem;
+        text-align: center;
+      }
     </style>
 
     <figure>
@@ -245,7 +250,7 @@
 
 
   <figure>
-    <figcaption style="text-align: center;">
+    <figcaption>
       常见显示设备 CSS 像素尺寸
     </figcaption>
     <table id="device-size-table">
