@@ -77,14 +77,18 @@ function animate(time) {
 function Resize() {
   const width = container.clientWidth;
   const height = container.clientHeight;
+  
+  // 确保尺寸有效
+  if (width === 0 || height === 0) return;
+  
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(width, height);
 }
 Resize();
 window.addEventListener('resize', Resize);
-
-// render();
+window.addEventListener('orientationchange', Resize);
 
 
 
